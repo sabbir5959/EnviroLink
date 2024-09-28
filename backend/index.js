@@ -178,17 +178,19 @@ app.post("/api/users-reg", async (req, res) => {
 
   try {
     const query = `BEGIN register_user(:name, :phone, :email, :area, :road, :house, :password); END;`;
+    
+    
     const params = {
       name: body.name,
       phone: body.phone,
       email: body.email,
-      area: body.area,
-      road: body.road,
-      house: body.house,
+      area: body.address.area, 
+      road: body.address.road, 
+      house: body.address.house, 
       password: body.password,
     };
 
-    await insert(query, params);  // Assuming `insert` is your custom function to interact with the database
+    await insert(query, params);  
 
     res.status(201).send("Registration successful");
   } catch (error) {
@@ -196,6 +198,7 @@ app.post("/api/users-reg", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 
 
@@ -335,12 +338,24 @@ app.post('/api/driver/notifications', async (req, res) => {
   }
 
   const query =`
-    SELECT u.user_id, f.U_feedback_date, u.u_name AS user_name, u.u_phone_no, u.u_email, u.u_area, u.u_road, u.u_house, sr.status, w.TYPE as "Waste Type", sr.quantity, sr.price
-    FROM FeedbackForUsers f
-    JOIN SellingRequest sr ON f.U_request_id = sr.sell_req_id
-    JOIN Users u ON sr.user_id = u.user_id
-    JOIN WASTE w ON sr.waste_id = w.WASTE_ID
-    WHERE f.U_driver_id = :driver_id AND sr.status <> 'completed'`;
+  SELECT u.user_id, 
+         f.U_feedback_date, 
+         u.u_name AS user_name, 
+         u.u_phone_no, 
+         u.u_email, 
+         u.full_address AS address,  
+         sr.status, 
+         w.TYPE as "Waste Type", 
+         sr.quantity, 
+         sr.price
+  FROM FeedbackForUsers f
+  JOIN SellingRequest sr ON f.U_request_id = sr.sell_req_id
+  JOIN Users u ON sr.user_id = u.user_id
+  JOIN WASTE w ON sr.waste_id = w.WASTE_ID
+  WHERE f.U_driver_id = :driver_id 
+    AND sr.status <> 'completed'
+`;
+
 
 
   try {
@@ -371,15 +386,16 @@ app.get('/api/user-history', async (req, res) => {
       console.log('Fetching user history for email:', email);
 
       const query = `
-          SELECT 
-              sr.status, sr.sell_req_date AS order_date, u.user_id, u.u_name AS user_name, 
-              u.u_area || ', ' || u.u_road || ', ' || u.u_house AS address,
-              w.TYPE AS waste_name, sr.quantity, sr.price
-          FROM SellingRequest sr
-          JOIN Users u ON sr.user_id = u.user_id
-          JOIN WASTE w ON sr.waste_id = w.WASTE_ID
-          WHERE u.u_email = :email AND sr.status = 'completed'
-      `;
+  SELECT 
+    sr.status, sr.sell_req_date AS order_date, u.user_id, u.u_name AS user_name, 
+    u.full_address AS address, 
+    w.TYPE AS waste_name, sr.quantity, sr.price
+  FROM SellingRequest sr
+  JOIN Users u ON sr.user_id = u.user_id
+  JOIN WASTE w ON sr.waste_id = w.WASTE_ID
+  WHERE u.u_email = :email AND sr.status = 'completed'
+`;
+
 
       const result = await getData(query, { email });
       console.log('Query result:', result);

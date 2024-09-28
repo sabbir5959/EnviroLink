@@ -1,17 +1,17 @@
 ------------------------------------------------------------ DROP TABLES ---------------------------------------------------------------
 
 
-DROP TABLE IF EXISTS FeedbackForCompany CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS FeedbackForUsers CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS reportToAdmin CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS WasteDetails CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS Driver CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS Company CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS BuyingRequest CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS SellingRequest CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS Users CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS Admin CASCADE CONSTRAINTS;
-DROP TABLE IF EXISTS Waste CASCADE CONSTRAINTS;
+DROP TABLE FeedbackForCompany CASCADE CONSTRAINTS;
+DROP TABLE FeedbackForUsers CASCADE CONSTRAINTS;
+DROP TABLE reportToAdmin CASCADE CONSTRAINTS;
+DROP TABLE WasteDetails CASCADE CONSTRAINTS;
+DROP TABLE Driver CASCADE CONSTRAINTS;
+DROP TABLE Company CASCADE CONSTRAINTS;
+DROP TABLE BuyingRequest CASCADE CONSTRAINTS;
+DROP TABLE SellingRequest CASCADE CONSTRAINTS;
+DROP TABLE Users CASCADE CONSTRAINTS;
+DROP TABLE Admin CASCADE CONSTRAINTS;
+DROP TABLE Waste CASCADE CONSTRAINTS;
 
 
 
@@ -19,17 +19,18 @@ DROP TABLE IF EXISTS Waste CASCADE CONSTRAINTS;
 ------------------------------------------------------------ DROP SEQUENCES ---------------------------------------------------------------
 
 
-DROP SEQUENCE IF EXISTS user_id_seq;
-DROP SEQUENCE IF EXISTS admin_id_seq;
-DROP SEQUENCE IF EXISTS sell_req_id_seq;
-DROP SEQUENCE IF EXISTS buy_req_id_seq;
-DROP SEQUENCE IF EXISTS company_id_seq;
-DROP SEQUENCE IF EXISTS driver_id_seq;
-DROP SEQUENCE IF EXISTS waste_id_seq;
-DROP SEQUENCE IF EXISTS u_feedback_id_seq;
-DROP SEQUENCE IF EXISTS c_feedback_id_seq;
-DROP SEQUENCE IF EXISTS report_id_seq;
-DROP SEQUENCE IF EXISTS waste_details_id_seq;
+DROP SEQUENCE user_id_seq;
+DROP SEQUENCE admin_id_seq;
+DROP SEQUENCE sell_req_id_seq;
+DROP SEQUENCE buy_req_id_seq;
+DROP SEQUENCE company_id_seq;
+DROP SEQUENCE driver_id_seq;
+DROP SEQUENCE waste_id_seq;
+DROP SEQUENCE u_feedback_id_seq;
+DROP SEQUENCE c_feedback_id_seq;
+DROP SEQUENCE report_id_seq;
+DROP SEQUENCE waste_details_id_seq;
+
 
 
 
@@ -43,8 +44,8 @@ DROP SEQUENCE IF EXISTS waste_details_id_seq;
 ------------------------------------------------------------ DROP VIEWS ---------------------------------------------------------------
 
 
-DROP VIEW IF EXISTS BuyingRequestHistoryView;
-DROP VIEW IF EXISTS SellingRequestHistoryView;
+DROP VIEW BuyingRequestHistoryView;
+DROP VIEW SellingRequestHistoryView;
 
 
 
@@ -53,17 +54,116 @@ DROP VIEW IF EXISTS SellingRequestHistoryView;
 ------------------------------------------------------------ DROP TRIGGERS ---------------------------------------------------------------
 
 
-DROP TRIGGER IF EXISTS user_id_trigger;
-DROP TRIGGER IF EXISTS sell_req_id_trigger;
-DROP TRIGGER IF EXISTS buy_req_id_trigger;
-DROP TRIGGER IF EXISTS company_id_trigger;
-DROP TRIGGER IF EXISTS driver_id_trigger;
-DROP TRIGGER IF EXISTS u_feedback_id_trigger;
-DROP TRIGGER IF EXISTS c_feedback_id_trigger;
-DROP TRIGGER IF EXISTS report_id_trigger;
-DROP TRIGGER IF EXISTS waste_details_id_trigger;
-DROP TRIGGER IF EXISTS update_selling_request_status;
 
+-- Drop user_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER user_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop sell_req_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER sell_req_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop buy_req_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER buy_req_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop company_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER company_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop driver_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER driver_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop u_feedback_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER u_feedback_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop c_feedback_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER c_feedback_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop report_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER report_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop waste_details_id_trigger
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER waste_details_id_trigger';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
+
+-- Drop update_selling_request_status
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TRIGGER update_selling_request_status';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -4080 THEN
+      RAISE;
+    END IF;
+END;
+/
 
 
 
@@ -72,7 +172,7 @@ DROP TRIGGER IF EXISTS update_selling_request_status;
 ------------------------------------------------------------ DROP PROCEDURES ---------------------------------------------------------------
 
 
-DROP PROCEDURE IF EXISTS register_user;
+DROP PROCEDURE register_user;
 
 
 
@@ -82,8 +182,8 @@ DROP PROCEDURE IF EXISTS register_user;
 ------------------------------------------------------------ DROP FUNCTIONS ---------------------------------------------------------------
 
 
-DROP FUNCTION IF EXISTS check_phone;
-DROP FUNCTION IF EXISTS check_email;
+DROP FUNCTION check_phone;
+DROP FUNCTION check_email;
 
 
 

@@ -1,3 +1,13 @@
+------------------------------------------------------------------------ ADT -------------------------------------------------------------------
+
+
+CREATE TYPE AddressType AS OBJECT (
+    area VARCHAR2(100),
+    road VARCHAR2(100),
+    house VARCHAR2(100)
+);
+
+
 ------------------------------------------------------------------------ TABLES -------------------------------------------------------------------
 
 
@@ -7,11 +17,11 @@ CREATE TABLE Users (
     u_password VARCHAR2(100) NOT NULL,
     u_phone_no VARCHAR2(20) NOT NULL,
     u_email VARCHAR2(100) NOT NULL,
-    u_area VARCHAR2(100) NOT NULL,
-    u_road VARCHAR2(100) NOT NULL,
-    u_house VARCHAR2(100) NOT NULL,
+    address AddressType,
+    full_address VARCHAR2(304) GENERATED ALWAYS AS (address.area || ', ' || address.road || ', ' || address.house) VIRTUAL,
     PRIMARY KEY (user_id)
 );
+
 
 CREATE TABLE Admin (
     admin_id NUMBER(20) NOT NULL,
@@ -388,47 +398,6 @@ END;
 /
 
 
------------------------------------------------------------------------- PROCEDURE -------------------------------------------------------------------
-
-
-CREATE OR REPLACE PROCEDURE register_user(
-    p_name      IN USERS.u_name%TYPE,
-    p_phone     IN USERS.u_phone_no%TYPE,
-    p_email     IN USERS.u_email%TYPE,
-    p_area      IN USERS.u_area%TYPE,
-    p_road      IN USERS.u_road%TYPE,
-    p_house     IN USERS.u_house%TYPE,
-    p_password  IN USERS.u_password%TYPE
-) IS
-    invalid_phone EXCEPTION;
-    invalid_email EXCEPTION;
-BEGIN
-    -- Validate phone number using the check_phone function
-    IF NOT check_phone(p_phone) THEN
-        RAISE invalid_phone;
-    END IF;
-
-    -- Validate email using the check_email function
-    IF NOT check_email(p_email) THEN
-        RAISE invalid_email;
-    END IF;
-
-    -- If validations pass, insert the user record into the USERS table
-    INSERT INTO USERS (u_name, u_phone_no, u_email, u_area, u_road, u_house, u_password)
-    VALUES (p_name, p_phone, p_email, p_area, p_road, p_house, p_password);
-
-    COMMIT;
-EXCEPTION
-    WHEN invalid_phone THEN
-        RAISE_APPLICATION_ERROR(-20002, 'Invalid phone number format');
-    WHEN invalid_email THEN
-        RAISE_APPLICATION_ERROR(-20003, 'Invalid email format');
-    WHEN OTHERS THEN
-        -- Handle other exceptions
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20001, 'Error occurred while registering user: ' || SQLERRM);
-END register_user;
-/
 
 
 --------------------------------------------------------------------- FUNCTION -------------------------------------------------------------------
@@ -456,3 +425,51 @@ BEGIN
     END IF;
 END;
 /
+
+
+------------------------------------------------------------------------ PROCEDURE -------------------------------------------------------------------
+
+
+CREATE OR REPLACE PROCEDURE register_user(
+    p_name      IN USERS.u_name%TYPE,
+    p_phone     IN USERS.u_phone_no%TYPE,
+    p_email     IN USERS.u_email%TYPE,
+    p_area      IN VARCHAR2,
+    p_road      IN VARCHAR2,
+    p_house     IN VARCHAR2,
+    p_password  IN USERS.u_password%TYPE
+) IS
+    invalid_phone EXCEPTION;
+    invalid_email EXCEPTION;
+BEGIN
+   
+    IF NOT check_phone(p_phone) THEN
+        RAISE invalid_phone;
+    END IF;
+
+  
+    IF NOT check_email(p_email) THEN
+        RAISE invalid_email;
+    END IF;
+
+   
+    INSERT INTO USERS (u_name, u_phone_no, u_email, address, u_password)
+    VALUES (p_name, p_phone, p_email, AddressType(p_area, p_road, p_house), p_password);
+
+    COMMIT;
+
+EXCEPTION
+    WHEN invalid_phone THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Invalid phone number format');
+    WHEN invalid_email THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Invalid email format');
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE_APPLICATION_ERROR(-20001, 'Error occurred while registering user: ' || SQLERRM);
+END register_user;
+/
+
+
+
+
+

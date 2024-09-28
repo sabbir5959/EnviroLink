@@ -12,18 +12,6 @@ const submit = document.getElementById("register");
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email.value)) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-
-  const phonePattern = /^(\+8801|8801|01)[3-9]\d{8}$/;
-  if (!phonePattern.test(phone.value)) {
-    alert("Please enter a valid Bangladeshi phone number (e.g., 01XXXXXXXXX).");
-    return;
-  }
-
   if (password.value !== confirmPassword.value) {
     console.log(password.value, confirmPassword.value);
     alert("Passwords do not match");
@@ -32,14 +20,14 @@ const handleSubmit = async (e) => {
 
   
   const user = {
-      name: name.value,
-      phone: phone.value,
-      email: email.value,
-      area: area.value,
-      road: road.value,
-      house: house.value,
-      password: password.value,
-    };
+    name: name.value,
+    phone: phone.value,
+    email: email.value,
+    area: area.value,
+    road: road.value,
+    house: house.value,
+    password: password.value,
+  };
 
     console.log(user);
 
