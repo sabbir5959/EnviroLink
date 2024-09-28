@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Waste</title>
+    <link rel="stylesheet" href="../css/buy_waste.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Buy Waste from Admin</h1>
+
+        <a href="../html/company_profile.html">Back</a>
+
+        <div class="waste-items">
+            <div class="waste-item">
+                <img src="https://images.unsplash.com/flagged/photo-1572213426852-0e4ed8f41ff6?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Plastic Image">
+                <div class="waste-details">
+                    <h2>Plastic</h2>
+                    <p>Available: <span id="plastic-quantity">0</span> kg</p>
+                    <p>Price: <span id="plastic-price">90</span> Tk per kg</p>
+                </div>
+            </div>
+
+            <div class="waste-item">
+                <img src="https://images.unsplash.com/photo-1585351737354-204ffbbe584f?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Paper Image">
+                <div class="waste-details">
+                    <h2>Paper</h2>
+                    <p>Available: <span id="paper-quantity">0</span> kg</p>
+                    <p>Price: <span id="paper-price">55</span> Tk per kg</p>
+                </div>
+            </div>
+
+            <div class="waste-item">
+                <img src="https://images.unsplash.com/photo-1536842409491-b3bbde0e3b66?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dg" alt="Metal Image">
+                <div class="waste-details">
+                    <h2>Metal</h2>
+                    <p>Available: <span id="metal-quantity">0</span> kg</p>
+                    <p>Price: <span id="metal-price">100</span> Tk per kg</p>
+                </div>
+            </div>
+        </div>
+
+        <form id="buyWasteForm">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="waste-type">Select Waste Type:</label>
+            <select id="waste-type" name="waste-type" required>
+                <option value="Plastic">Plastic</option>
+                <option value="Paper">Paper</option>
+                <option value="Metal">Metal</option>
+            </select>
+
+            <label for="quantity">Quantity (kg):</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Popup Window -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="close-btn">&times;</span>
+            <h2>Order Details</h2>
+            <p>ID: <span id="company-id">Waste Management Co.</span></p>
+            <p>Email: <span id="company-email">info@wastemgmt.com</span></p>
+            <p>Waste Type: <span id="popup-waste-type"></span></p>
+            <p>Quantity: <span id="popup-quantity"></span> kg</p>
+            <p>Total Price: Tk <span id="popup-total-price"></span></p>
+            <button id="confirm-btn">Confirm</button>
+            <button id="cancel-btn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="../script/buy_waste.js"></script>
+</body>
+</html>

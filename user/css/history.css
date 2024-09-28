@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light background color */
+    color: #333; /* Dark text color */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    color: #007bff; /* Blue color for the heading */
+}
+
+#history {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.request {
+    background: #ffffff; /* White background for request cards */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns items at the start vertically */
+}
+
+.customer-details, .product-details {
+    flex: 1;
+    padding: 10px;
+}
+
+.customer-details h3, .product-details h3 {
+    color: #007bff; /* Blue color for subheadings */
+    border-bottom: 1px solid #ddd; /* Light border */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-info {
+    display: flex;
+    align-items: center; /* Align items horizontally */
+    background-color: #f4f4f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-info img {
+    width: 80px; /* Adjusted to match image size from the screenshot */
+    height: 80px; /* Maintain a square aspect ratio */
+    border-radius: 8px; /* Slight rounding on the image */
+    margin-right: 15px; /* Space between the image and product text */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.product-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-text p {
+    margin: 5px 0;
+    font-size: 14px; /* Slightly smaller text */
+}
+
+.product-text p strong {
+    font-weight: bold;
+}
+
+.status {
+    color: #28a745; /* Green color for the status */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.back-button {
+    background: #007bff; /* Blue color for back button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px; /* Space below the button */
+}
+
+.back-button:hover {
+    background: #0056b3; /* Darker blue on hover */
+}

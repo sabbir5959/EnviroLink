@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/login.css">
+    <title>Company Login</title>
+</head>
+<body>
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="../../global/images/logo.png" alt="Logo">
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="../../global/Interface/index.html" class="link">Home</a></li>
+                
+            </ul>
+        </div>
+        <div class="nav-button">
+            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+        </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav>
+
+<!----------------------------- Form box ----------------------------------->    
+    <div class="form-box">
+        
+        <!------------------- login form -------------------------->
+
+        <div class="login-container" id="c_login">
+            <div class="top">
+                <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                <header>Company Login</header>
+            </div>
+            <form id="companyLoginForm"> <!-- Add form here -->
+                <div class="input-box">
+                    <input type="text" class="input-field" id="c_email" placeholder="Email">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" id="c_password" placeholder="Password"> <!-- Correct ID -->
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <button type="submit" id="submitBtn" class="submit">SIGN IN</button> <!-- Set button type to submit -->
+                </div>
+            </form>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="login-check">
+                    <label for="login-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Forgot password?</a></label>
+                </div>
+            </div>
+        </div>
+        
+
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="User ID">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Phone">
+                    <i class="bx bx-phone"></i>
+                </div>
+            </div>
+            
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Area">
+                    <i class="bx bx-current-location"></i>
+                </div>
+            </div>
+
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Road No">
+                    <i class="bx bx-street-view"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="House No">
+                    <i class="bx bx-building-house"></i>
+                </div>
+            </div>
+
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Password">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Confirm Password">
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            
+            <div class="input-box">
+                <button type="submit" name="submit" id="submit" class="submit" value="Register"> Sign Up </button>
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check"> Remember Me</label>
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>   
+
+<script>
+
+    
+
+    function login() {
+        var a = document.getElementById("loginBtn");
+        var b = document.getElementById("registerBtn");
+        var x = document.getElementById("c_login");
+        var y = document.getElementById("register");
+
+
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+
+    function register() {
+        var a = document.getElementById("loginBtn");
+        var b = document.getElementById("registerBtn");
+        var x = document.getElementById("c_login");
+        var y = document.getElementById("register");
+
+
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+    }
+
+</script>
+
+<script src="../script/company_login.js"></script>
+
+</body>
+</html>

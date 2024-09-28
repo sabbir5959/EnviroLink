@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/admin_profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../../global/images/logo.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="#" class="link" onclick="loadContent('profile')"><i class='bx bx-home'></i> Profile</a></li>
+                <li><a href="#" class="link" onclick="loadContent('users')"><i class='bx bx-user'></i> Users</a></li>
+                <li><a href="#" class="link" onclick="loadContent('drivers')"><i class='bx bx-car'></i> Drivers</a></li>
+                <li><a href="#" class="link" onclick="loadContent('company')"><i class='bx bx-building'></i> Company</a></li>
+                <li><a href="#" class="link" onclick="loadContent('sellingRequests')"><i class='bx bx-package'></i> Selling Requests</a></li>
+                <li><a href="#" class="link" onclick="loadContent('buyingRequests')"><i class='bx bx-package'></i> Buying Requests</a></li>
+                <li><a href="#" class="link" onclick="loadContent('history')"><i class="bx bx-history"></i>History</a></li>
+                <li><a href="#" class="link" onclick="loadContent('dynamicSearch')"><i class='bx bx-search'></i> Search</a></li>
+
+                <li><a href="../html/admin_login.html" class="link"><i class='bx bx-log-out'></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Welcome, <span id="name">Hello</span></h1>
+            <div id="content">
+                <p>This is your profile page. Here you can manage users, drivers, companies, settings, and view notifications.</p>
+            </div>
+
+            <!-- Company Section -->
+            <div id="companySection" style="display: none;">
+                <h2>Company Details</h2>
+                <div id="companyDetails">
+                    <!-- Company details will be dynamically loaded here -->
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                    <label for="companyAddress">Company Address:</label>
+                </div>
+            </div>
+
+                        <!-- Selling Requests Section -->
+            <div id="sellingRequestsSection" style="display: none;">
+                <h2>Selling Requests</h2>
+                <div id="scrollableTableBody">
+                    <table id="sellingRequestsTable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="detailsSection" style="display: none;">
+                    <h2>Selling Request Details</h2>
+                    <div id="detailsContent">
+                        <!-- Details content will be dynamically loaded here -->
+                    </div>
+                    <div id="feedback-section">
+                        <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" required>
+                            <label for="driverName">Driver Name:</label>
+                            <select id="driverName" name="driverName" required>
+                                <!-- Driver names will be populated here dynamically -->
+                            </select>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" required>Your request has been accepted and we will collect the items on </textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                        <button id="acceptButton" onclick="acceptRequest(currentRequestId)">Accept</button>
+                        <button id="rejectButton" onclick="rejectRequest(currentRequestId)">Reject</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Buying Requests Section -->
+            <div id="buyingRequestsSection" style="display: none;">
+                <h2>Buying Requests</h2>
+                <div id="scrollableTableBody">
+                    <table id="buyingRequestsTable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="detailsSection" style="display: none;">
+                    <h2>Buying Request Details</h2>
+                    <div id="detailsContent">
+                        <!-- Details content will be dynamically loaded here -->
+                    </div>
+                    
+                    <div id="feedback-section">
+                        <form id="feedbackForm" onsubmit="submitBuyingRequestFeedback(event)">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" required>
+                            <label for="driverName">Driver Name:</label>
+                            <select id="driverName" name="driverName" required>
+                                <!-- Driver names will be populated here dynamically -->
+                            </select>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" required>required>Your request has been accepted. </textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                        <button id="acceptButton" onclick="acceptRequest(currentRequestId)">Accept</button>
+                        <button id="rejectButton" onclick="rejectRequest(currentRequestId)">Reject</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Drivers Section -->
+            <div id="driversSection" style="display: none;">
+                <h2>Drivers</h2>
+                <div id="driversList">
+                    <table id="driversTable">
+                        <thead>
+                            <tr>
+                                <th>Driver ID</th>
+                                <th>Driver Name</th>
+                                <th>Truck Number</th>
+                                <th>Licence Number</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Driver rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Search section -->
+            <div id="dynamicSearchSection" style="display: none;">
+                <h2>Search</h2>
+                
+                <div id="searchSection">
+                 
+                 <!-- Date input -->
+                    <div class="filter-item">
+                     <label for="addDate">Date:</label>
+                     <input type="date" id="addDate" placeholder="mm/dd/yyyy">
+                    </div>
+                    
+                    <!-- Category dropdown -->
+                    <div class="filter-item">
+                        <label for="categories">Categories:</label>
+                        <select id="categories">
+                            <option value="Cdefault">Default</option>
+                            <option value="sell">Selling Waste</option>
+                            <option value="buy">Buying Waste</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Price sorting dropdown -->
+                    <div class="filter-item">
+                        <label for="price">Sort By:</label>
+                        <select id="price">
+                            <option value="Pdefault">Default</option>
+                            <option value="low">Price low to high</option>
+                            <option value="high">Price high to low</option>
+                            <option value="average+">Price average (+)</option>
+                            <option value="average-">Price average (-)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Waste Type dropdown -->
+                    <div class="filter-item">
+                        <label for="wasteType">Waste Type:</label>
+                        <select id="wasteType">
+                            <option value="Wdefault">Default</option>
+                            <option value="Paper">Paper</option>
+                            <option value="Metal">Metal</option>
+                            <option value="Plastic">Plastic</option>
+                        </select>
+                    </div>
+                    <!-- price input -->
+                    <div class="filter-item">
+                        <label for="searchPrice">Price:</label>
+                        <input type="number" id="searchPrice" placeholder="Enter price">
+                    </div>
+                    
+                    <!-- Search button -->
+                    <div class="filter-item">
+                        <label>&nbsp;</label> <!-- Empty label to align button properly -->
+                        <button id="searchButton" onclick="performSearch()">Search</button>
+                    </div>
+
+                </div>
+
+            <!-- Search results container -->
+                <div id="searchResults"></div>  
+                  
+            </div>        
+                      
+        </div>
+    </div>
+
+    <script src="../script/admin_profile.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,87 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Profile Container Styles */
+.profile-container {
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.profile-header {
+    margin-bottom: 35px;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.profile-name {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Profile Cards Container */
+.profile-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+/* Individual Card Styles */
+.card {
+    background-color: #f4f7f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.card i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Additional Styles */
+.card:active {
+    transform: scale(0.98);
+}

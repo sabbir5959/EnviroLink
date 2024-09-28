@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/sell_waste.css">
+    <title>Waste Management System</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Selling Waste to Admin</h1>
+
+        <a href="../../user/html/user_profile.html">Back</a>
+
+        <div class="table-container">
+            <h2>Waste Information</h2>
+            <table id="waste-info-table">
+                <thead>
+                    <tr>
+                        <th>Waste ID</th>
+                        <th>Waste Type</th>
+                        <th>Weight (Kg)</th>
+                        <th>Price (TK)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Waste information will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <h2>Sell Waste</h2>
+            <form id="sellingRequestForm">
+                <label for="wasteType">Waste Type:</label>
+                <select id="wasteType" name="wasteType" required>
+                    <option value="Paper">Paper</option>
+                    <option value="Plastic">Plastic</option>
+                    <option value="Metal">Metal</option>
+                </select>
+                
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+                
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <button type="button" id="confirmBtn">Confirm</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup Modal for confirmation -->
+    <div id="popupModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Confirm Your Details</h2>
+            <p><strong>User Name:</strong> <span id="popupUserName"></span></p>
+            <p><strong>Waste Type:</strong> <span id="popupWasteType"></span></p>
+            <p><strong>Quantity:</strong> <span id="popupQuantity"></span></p>
+            <p><strong>Price:</strong> <span id="popupPrice"></span></p>
+            <p><strong>Date:</strong> <span id="popupDate"></span></p>
+            <button id="submitBtn">Submit</button>
+            <button id="closePopupBtn">Close</button>
+        </div>
+    </div>
+
+    <script src="../script/waste_table_show.js"></script>
+    <script src="../script/sell_waste.js"></script>
+</body>
+</html>

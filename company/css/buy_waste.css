@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Updated a tag styling */
+a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px 20px;
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+a:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+a:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.waste-items {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.waste-item {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.waste-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.waste-details h2 {
+    margin: 10px 0;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input, form select, form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+/* Popup Styling */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    border-radius: 12px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.popup-content {
+    position: relative;
+    text-align: center;
+}
+
+#close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+#close-btn:hover {
+    color: #d9534f; /* Red color for close button on hover */
+}
+
+.popup h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #333;
+    border-bottom: 2px solid #007bff; /* Blue line under the header */
+    padding-bottom: 10px;
+}
+
+.popup p {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.popup p span {
+    font-weight: 600;
+    color: #333;
+}
+
+.popup .company-info {
+    font-style: italic;
+    color: #007bff; /* Blue color for company email */
+}
+
+.popup button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+.popup button:hover {
+    background-color: #0056b3;
+}
+
+#confirm-btn {
+    background-color: #28a745; /* Green color for confirm button */
+}
+
+#confirm-btn:hover {
+    background-color: #218838;
+}
+
+#cancel-btn {
+    background-color: #dc3545; /* Red color for cancel button */
+}
+
+#cancel-btn:hover {
+    background-color: #c82333;
+}

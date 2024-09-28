@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/company_profile.css"> <!-- Link to external CSS file -->
+    <title>Company Profile</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">Company Name</div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="wrapper">
+        <div class="container">
+            <!-- Notifications Section -->
+            <div class="card" id="notifications">
+                <i class='bx bx-bell'></i>
+                <h3>Notifications</h3>
+                <p id="notificationContent">Loading notifications...</p>
+                <a href="../html/companyNotification.html" class="button">View All</a>
+            </div>
+
+            <!-- Buy Waste Section -->
+            <div class="card" id="buyWaste">
+                <i class='bx bx-cart'></i>
+                <h3>Buy Waste</h3>
+                <p id="buyWasteContent">View and buy available waste for recycling.</p>
+                <a href="../html/buy_waste.html" class="button">Buy Now</a>
+            </div>
+
+            <!-- History Section -->
+            <div class="card" id="history">
+                <i class='bx bx-history'></i>
+                <h3>History</h3>
+                <p id="historyContent">Review your past transactions and activities.</p>
+                <a href="../html/company_history.html" class="button">View History</a>
+            </div>
+
+            <!-- Log Out Section -->
+            <div class="card" id="logout">
+                <i class='bx bx-log-out'></i>
+                <h3>Log Out</h3>
+                <p id="logoutContent">Log out from your account securely.</p>
+                <a href="../html/company_login.html" class="button" onclick="logOut()">Log Out</a>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="../script/company_login.js"></script> <!-- Link to external JS file -->
+</body>
+</html>

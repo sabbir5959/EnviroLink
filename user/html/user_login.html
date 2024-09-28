@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/login.css">
+    <title>User Login</title>
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="nav">
+            <div class="nav-logo">
+                <img src="../../global/images/logo.png" alt="Logo">
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="../../global/Interface/index.html" class="link">Home</a></li>
+                    
+                </ul>
+            </div>
+            <div class="nav-button">
+                <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+                <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="form-box">
+            
+            <!--------------------------------------------------- Login form ------------------------------------------------------>
+
+            <form class="login-container" id="login">
+                <div class="top">
+                    <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                    <header>User Login</header>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" id="Email" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" class="input-field" id="password" placeholder="Password">
+                    <i class="bx bx-lock-alt"></i>
+                    <!-- <i class="bx bx-show password-toggle" onclick="togglePassword('password')"></i> -->
+                </div>
+                <div class="input-box">
+                    <button id="submit" name="submit" class="submit">
+                        SIGN IN
+                    </button>
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="login-check">
+                        <label for="login-check"> Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Forgot password?</a></label>
+                    </div>
+                </div>
+            </form>
+
+            <!--------------------------------------------------- Registration form ----------------------------------------------------->
+
+            <form class="register-container" id="register">
+                <div class="top">
+                    <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                    <header>Sign Up</header>
+                </div>
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" id="name" placeholder="Username">
+                        <i class="bx bx-phone"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" id="phone" placeholder="Phone">
+                        <i class="bx bx-phone"></i>
+                    </div>
+                </div>
+                
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Email" id="email">
+                        <i class="bx bx-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Area" id="area">
+                        <i class="bx bx-current-location"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Road No" id="road">
+                        <i class="bx bx-street-view"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="House No" id="house">
+                        <i class="bx bx-building-house"></i>
+                    </div>
+                </div>
+
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="password" class="input-field" placeholder="Password" id="password-reg">
+                        <i class="bx bx-lock-alt"></i>
+                        <!-- <i class="bx bx-show password-toggle" onclick="togglePassword('password-reg')"></i> -->
+                    </div>
+                    <div class="input-box">
+                        <input type="password" class="input-field" placeholder="Confirm Password" id="confirmPassword">
+                        <i class="bx bx-lock-alt"></i>
+                        <!-- <i class="bx bx-show password-toggle" onclick="togglePassword('confirmPassword')"></i> -->
+                    </div>
+                </div>
+                
+                <div class="input-box">
+                    <button type="submit" name="submit" id="submit" class="submit" value="Register"> Sign Up </button>
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check"> Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Terms & conditions</a></label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>   
+
+    <script>
+        function myMenuFunction() {
+            var i = document.getElementById("navMenu");
+            if(i.className === "nav-menu") {
+                i.className += " responsive";
+            } else {
+                i.className = "nav-menu";
+            }
+        }
+
+        function login() {
+            var x = document.getElementById("login");
+            var y = document.getElementById("register");
+            var a = document.getElementById("loginBtn");
+            var b = document.getElementById("registerBtn");
+        
+            x.style.left = "4px";
+            y.style.right = "-520px";
+            a.className += " white-btn";
+            b.className = "btn";
+            x.style.opacity = 1;
+            y.style.opacity = 0;
+        }
+        
+        function register() {
+            var x = document.getElementById("login");
+            var y = document.getElementById("register");
+            var a = document.getElementById("loginBtn");
+            var b = document.getElementById("registerBtn");
+        
+            x.style.left = "-510px";
+            y.style.right = "5px";
+            a.className = "btn";
+            b.className += " white-btn";
+            x.style.opacity = 0;
+            y.style.opacity = 1;
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.nextElementSibling;
+    
+            if (field.type === "password") {
+                field.type = "text";
+                icon.className = "bx bx-hide password-toggle";
+            } else {
+                field.type = "password";
+                icon.className = "bx bx-show password-toggle";
+            }
+        }
+
+    </script>
+    <script src="../script/login.js"></script>
+    <script src="../script/reg.js"></script>
+</body>
+</html>
