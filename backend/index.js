@@ -22,10 +22,6 @@ app.get("/api", (req, res) => {
 });
 
 
-
-
-
-
 // ---------------------------------------------------------------------- FUNCTION LOGIN --------------------------------------------------------------------------
 
 
@@ -181,7 +177,7 @@ app.post("/api/users-reg", async (req, res) => {
   console.log(body);
 
   try {
-    const query = "INSERT INTO USERS (u_name, u_phone_no, u_email, u_area, u_road, u_house, u_password) VALUES (:name, :phone, :email, :area, :road, :house, :password)";
+    const query = `BEGIN register_user(:name, :phone, :email, :area, :road, :house, :password); END;`;
     const params = {
       name: body.name,
       phone: body.phone,
@@ -192,7 +188,7 @@ app.post("/api/users-reg", async (req, res) => {
       password: body.password,
     };
 
-    await insert(query, params);
+    await insert(query, params);  // Assuming `insert` is your custom function to interact with the database
 
     res.status(201).send("Registration successful");
   } catch (error) {
@@ -203,13 +199,18 @@ app.post("/api/users-reg", async (req, res) => {
 
 
 
+
+
 // ---------------------------------------------------------------------- SELLING REQUESTS --------------------------------------------------------------------------
 
 // Submit a new selling request
 app.post('/api/selling-requests', async (req, res) => {
   console.log('Request Body:', req.body);
   const body = req.body;
-  const userID = Number(body.userId);
+  const userID = body.userId;
+
+  console.log('User ID:', userID);
+
   const Price = Number(body.price);
   const WasteType = body.wasteType;
   const Quantity = Number(body.quantity);
@@ -266,12 +267,16 @@ app.get("/api/admin/selling-requests/pending", async (req, res) => {
   try {
     const query = "SELECT * FROM SELLINGREQUEST WHERE status IN ('pending', 'on going process')";
     const result = await get(query);
+
+    console.log("Selling result", result);
+
     res.status(200).send(result);
   } catch (error) {
     console.error("Error fetching pending selling requests:", error);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 // Accept a selling request
 app.put('/api/admin/selling-requests/:id/accept', async (req, res) => {
@@ -285,6 +290,7 @@ app.put('/api/admin/selling-requests/:id/accept', async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 // Reject a selling request
 app.delete('/api/admin/selling-requests/:id/reject', async (req, res) => {
@@ -328,8 +334,7 @@ app.post('/api/driver/notifications', async (req, res) => {
       return res.status(400).json({ error: 'Driver ID is required' });
   }
 
-  // SQL query to fetch notifications for the specific driver
-  const query = `
+  const query =`
     SELECT u.user_id, f.U_feedback_date, u.u_name AS user_name, u.u_phone_no, u.u_email, u.u_area, u.u_road, u.u_house, sr.status, w.TYPE as "Waste Type", sr.quantity, sr.price
     FROM FeedbackForUsers f
     JOIN SellingRequest sr ON f.U_request_id = sr.sell_req_id
@@ -453,11 +458,11 @@ app.get('/api/drivers-name', async (req, res) => {
 app.post("/api/drivers-reg", async (req, res) => {
   const body = req.body;
   console.log(body);
-  const driver_id = Number(body.driverID);
+  const driver_id = body.driverID;
   const d_name = body.name;
   const truck_no = body.truck_no;
   const licence_no = body.licence_no;
-  const d_phone = Number(body.phone);
+  const d_phone = body.phone;
 
   try {
     const query = "INSERT INTO Driver (driver_id, d_name, truck_no, licence_no, d_phone) VALUES (:driverID, :name, :truck_no, :licence_no, :phone)";
@@ -491,14 +496,6 @@ app.get('/api/drivers', async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-
-
-
-
-
-
-
 
 
 
@@ -553,6 +550,7 @@ app.post('/api/reportToAdmin', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while submitting the report.' });
   }
 });
+
 
 
 // ReportForCompany
@@ -667,7 +665,7 @@ app.post('/api/admin/selling-requests/:requestId/feedback', async (req, res) => 
     `;
 
     const params = {
-        requestId: Number(requestId),
+        requestId: requestId,
         feedback_date: date,
         driverId,
         driverName,
@@ -802,6 +800,7 @@ app.get('/api/drivers-info', async (req, res) => {
 
 
 // ---------------------------------------------------------------------- BUYING REQUEST --------------------------------------------------------------------------
+
 app.post('/api/buying-request', async (req, res) => {
   const { companyId, wasteType, quantity, price, date } = req.body;
   console.log('Received buying request:', req.body);
@@ -834,8 +833,8 @@ app.post('/api/buying-request', async (req, res) => {
 
     // Insert into BuyingRequest table using the sequence for buying_req_id
     const insertQuery = `
-      INSERT INTO BuyingRequest (buying_req_id, quantity, company_id, waste_id, amount, buy_req_date, status)
-      VALUES (buying_req_id_seq.NEXTVAL, :quantity, :companyId, :wasteId, :amount, TO_DATE(:buyReqDate, 'YYYY-MM-DD'), :status)
+      INSERT INTO BuyingRequest (quantity, company_id, waste_id, amount, buy_req_date, status)
+      VALUES (:quantity, :companyId, :wasteId, :amount, TO_DATE(:buyReqDate, 'YYYY-MM-DD'), :status)
     `;
     await insert(insertQuery, { 
       quantity, 
@@ -958,7 +957,7 @@ app.post('/api/admin/buying-requests/:requestId/feedback', async (req, res) => {
     `;
 
     const params = {
-        requestId: Number(requestId),
+        requestId: requestId,
         feedback_date: date,
         driverId,
         driverName,

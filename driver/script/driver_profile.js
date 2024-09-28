@@ -299,7 +299,7 @@ function loadWasteCollectRequests(Driver) {
                             <p><strong>Waste Type:</strong> ${notification[9]}</p>
                             <p><strong>Quantity:</strong> ${notification[10]}</p>
                             <p><strong>Price:</strong> ${notification[11]}</p>
-                            <button class="start-process-btn" onclick="acceptRequest(${notification[0]}, this)">Start Process</button>
+                            <button class="start-process-btn" onclick="acceptRequest('${notification[0]}', this)">Start Process</button>
                         </div>
                     </li>
                 `;

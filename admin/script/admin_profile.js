@@ -541,7 +541,11 @@ async function fetchBuyingRequests() {
     try {
         const response = await fetch('http://localhost:3000/api/admin/buying-requests/pending');
         buyingRequests = await response.json(); // Store the fetched requests
+
+        console.log('Fetched buying requests:', buyingRequests);
         
+        
+
         displayBuyingRequests(buyingRequests);
     } catch (error) {
         console.error('Error fetching buying requests:', error);
@@ -577,17 +581,19 @@ function displayBuyingRequests(buyingRequests) {
             fontWeight = 'bold';
         }
 
+        console.log('Request:', request);
+
         row.innerHTML = `
             <td>${request[0]}</td>
             <td>${request[2]}</td>
             <td style="color: ${statusColor}; font-weight: ${fontWeight};">${request[6]}</td>
             <td>
-                <button onclick="showBuyingDetails(${request[0]})">Details</button>
+                <button onclick="showBuyingDetails('${request[0]}')">Details</button>
                 ${request[6] === 'pending' ? 
-                    `<button onclick="AcceptRequest(${request[0]})">Accept</button>
-                     <button onclick="RejectRequest(${request[0]})">Reject</button>` : 
+                    `<button onclick="AcceptRequest('${request[0]}')">Accept</button>
+                     <button onclick="RejectRequest('${request[0]}')">Reject</button>` : 
                     request[6] === 'on going process' ? 
-                    `<button onclick="CancelRequest(${request[0]})">Cancel</button>` : ''}
+                    `<button onclick="CancelRequest('${request[0]}')">Cancel</button>` : ''}
             </td>
         `;
 
@@ -597,6 +603,8 @@ function displayBuyingRequests(buyingRequests) {
 
 function showBuyingDetails(BuyrequestId) {
     const request = buyingRequests.find(req => req[0] === BuyrequestId);
+
+
 
     if (!request) {
         alert('Request not found');
@@ -789,11 +797,15 @@ function searchUser() {
     displayUsers(filteredUsers);
 }
 
+
 // Fetching selling requests from the server
 async function fetchSellingRequests() {
     try {
         const response = await fetch('http://localhost:3000/api/admin/selling-requests/pending');
         sellingRequests = await response.json();
+
+        console.log('Fetched selling requests:', sellingRequests);
+
         sellingRequests.forEach(request => {
             request.SELL_REQ_DATE = new Date(request[6]).toISOString().slice(0, 10);
         });
@@ -830,17 +842,18 @@ function displaySellingRequests(sellingRequests) {
             <td>${request[1]}</td>
             <td style="color: ${statusColor}; font-weight: ${fontWeight};">${request[5]}</td>
             <td>
-                <button onclick="showDetails(${request[0]})">Details</button>
+                <button onclick="showDetails('${request[0]}')">Details</button>
                 ${request[5] === 'on going process' ? 
-                    `<button onclick="cancelRequest(${request[0]})">Cancel</button>` : 
+                    `<button onclick="cancelRequest('${request[0]}')">Cancel</button>` : 
                     request[5] === 'pending' ? 
-                    `<button onclick="acceptRequest(${request[0]})">Accept</button>
-                     <button onclick="rejectRequest(${request[0]})">Reject</button>` : ''}
+                    `<button onclick="acceptRequest('${request[0]}')">Accept</button>
+                     <button onclick="rejectRequest('${request[0]}')">Reject</button>` : ''}
             </td>
         `;
         tableBody.appendChild(row);
     });
 }
+
 // Showing request details
 function showDetails(requestId) {
     const request = sellingRequests.find(req => req[0] === requestId);
@@ -858,6 +871,8 @@ function showDetails(requestId) {
     document.getElementById('reqType').innerText = request[4];
     document.getElementById('date').innerText = request.SELL_REQ_DATE;
     document.getElementById('acceptRequestId').value = requestId;
+
+    console.log('Request Id:', requestId, 'User Id', request[1]);
 
     // Set status text and apply color and font weight based on the status
     const statusElement = document.getElementById('status');
