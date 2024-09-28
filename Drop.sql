@@ -26,7 +26,6 @@ DROP TRIGGER update_selling_request_status;
 DROP VIEW BuyingRequestHistoryView;
 DROP VIEW SellingRequestHistoryView;
 
-
 DROP TABLE FeedbackForUsers CASCADE CONSTRAINTS;
 DROP TABLE FeedbackForCompany CASCADE CONSTRAINTS;
 DROP TABLE reportToAdmin CASCADE CONSTRAINTS;
