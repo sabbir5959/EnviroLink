@@ -190,35 +190,34 @@ VALUES ('samia19', 'samia@gmail.com', 'East Side', 'Road 18', 'House 12A', '0123
 
 -- Insert data into Users table
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Farzana', 'samia19', '01914347042', 'farzana@gmail.com', 'Matikata', 'O-5', 'A-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Farzana', 'samia19', '01914347042', 'farzana@gmail.com', AddressType('Matikata', 'O-5', 'A-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Diner', 'diner41', '01234567890', 'diner@gmail.com', 'Shagufta', 'L-5', 'B-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Diner', 'diner41', '01134567890', 'diner@gmail.com', AddressType('Shagufta', 'L-5', 'B-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Kawsar', 'kawsar47', '01234567890', 'kawsar@gmail.com', 'Balughat', 'N-5', 'C-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Kawsar', 'kawsar47', '01234567890', 'kawsar@gmail.com', AddressType('Balughat', 'N-5', 'C-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house) 
-VALUES ('Sabbir', '55', '01798155814', 'sabbir1808769@gmail.com', 'Easter Housing', 'N-5', 'J-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Sabbir', '55', '01798155814', 'sabbir1808769@gmail.com', AddressType('Easter Housing', 'N-5', 'J-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Shoyeb', 'shoyeb71', '01234567890', 'shoyeb@gmail.com', 'Uttara', 'J-5', 'D-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ( 'Shoyeb', 'shoyeb71', '01234567890', 'shoyeb@gmail.com', AddressType('Uttara', 'J-5', 'D-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Ramisa', 'ramisa81', '01234567890', 'ramisa@gmail.com', 'Mirpur DOHS', 'N-5', 'E-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Ramisa', 'ramisa81', '01234567890', 'ramisa@gmail.com', AddressType('Mirpur DOHS', 'N-5', 'E-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Samara', 'samara99', '01234567890', 'samara@gmail.com', 'Farmgate', 'N-5', 'F-15');
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ( 'Samara', 'samara99', '01234567890', 'samara@gmail.com', AddressType('Farmgate', 'N-5', 'F-15'));
 
-INSERT INTO Users (u_name, u_password, u_phone_no, u_email, u_area, u_road, u_house)
-VALUES ('Sadia', 'sadia111', '01234567890', 'sadia@gmail.com', 'Balughat', 'J-5', 'G-15');
-
-
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Sadia', 'sadia111', '01234567890', 'sadia@gmail.com', AddressType('Balughat', 'J-5', 'G-15'));
 
 
 
 
+truncate table USERS;
 
 
 
@@ -239,8 +238,8 @@ INSERT INTO DRIVER (
     D_PHONE
 ) VALUES (
     'Kawsar',
-    'Dhaka Metro 19',
-    'Dhaka 19',
+    'Dhaka Metro-B 19-1234',
+    'BD-123456789019',
     '01234567890'
 );
 
@@ -251,8 +250,8 @@ INSERT INTO DRIVER (
     D_PHONE
 ) VALUES (
     'Diner',
-    'Dhaka Metro 41',
-    'Dhaka 41',
+    'Dhaka Metro-C 41-5678',
+    'BD-123456789041',
     '01234567890'
 );
 
@@ -263,8 +262,8 @@ INSERT INTO DRIVER (
     D_PHONE
 ) VALUES (
     'Shoyeb',
-    'Dhaka Metro 71',
-    'Dhaka 71',
+    'Dhaka Metro-D 71-9012',
+    'BD-123456789071',
     '01234567890'
 );
 
@@ -279,9 +278,10 @@ INSERT INTO DRIVER (
 
 
 -- Insert data into waste table
-    INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20202024, 'Plastic', 1, 45);
-    INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20212025, 'Paper', 1, 40);
-    INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20222026, 'Metal', 1, 80);
+
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20202024, 'Plastic', 1, 45);
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20212025, 'Paper', 1, 40);
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20222026, 'Metal', 1, 80);
 
 
 
@@ -301,11 +301,6 @@ FROM sellingrequest, waste, users
 where users.user_id = sellingrequest.user_id 
 and waste.waste_id = sellingrequest.waste_id 
 AND SELLINGREQUEST.SELL_REQ_DATE = TO_DATE('2024-09-14', 'YYYY-MM-DD');  2024-09-14
-
-
-
-
-
 
 
 

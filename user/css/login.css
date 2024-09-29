@@ -108,6 +108,21 @@ body{
     border-radius: 20px; /* Optional: add rounded corners */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Optional: add shadow */
 }
+
+.input-field-inner{
+    width: 500px;
+    font-size: 15px;
+     background: rgba(255, 255, 255, 0.2);
+     color: #fff;
+     height: 50px;
+     margin-bottom: 0px;
+     padding: 0 10px 0 45px;
+     border: none;
+     border-radius: 30px;
+     outline: none;
+     transition: .2s ease;
+ }
+
 .login-container{
     position: relative;
     left: 4px;

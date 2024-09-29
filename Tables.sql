@@ -470,6 +470,40 @@ END register_user;
 /
 
 
+------------------------------------------------------------------------ CURSOR -------------------------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE RegisterDriver (
+    p_driver_id IN Driver.driver_id%TYPE,
+    p_name IN Driver.d_name%TYPE,
+    p_truck_no IN Driver.truck_no%TYPE,
+    p_licence_no IN Driver.licence_no%TYPE,
+    p_phone IN Driver.d_phone%TYPE
+) IS
+    -- Define a cursor to check for existing driver by name and truck number
+    CURSOR check_driver IS
+        SELECT driver_id
+        FROM Driver
+        WHERE d_name = p_name AND truck_no = p_truck_no;
+
+BEGIN
+    -- Open the cursor
+    OPEN check_driver;
+
+    -- Check if the cursor fetched any rows
+    IF check_driver%FOUND THEN
+        -- Raise an error if driver name and truck number combination already exists
+        RAISE_APPLICATION_ERROR(-20001, 'Driver name and truck number combination already exists.');
+    ELSE
+        -- Insert the new driver
+        INSERT INTO Driver (driver_id, d_name, truck_no, licence_no, d_phone)
+        VALUES (p_driver_id, p_name, p_truck_no, p_licence_no, p_phone);
+    END IF;
+
+    -- Close the cursor
+    CLOSE check_driver;
+END;
+/
+
 
 
 

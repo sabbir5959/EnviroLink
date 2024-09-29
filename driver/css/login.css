@@ -176,6 +176,19 @@ header{
     color: #2e2323;
     font-weight: bold;
 }
+.input-field-inner{
+   width: 500px;
+   font-size: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    height: 50px;
+    margin-bottom: 0px;
+    padding: 0 10px 0 45px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: .2s ease;
+}
 .submit{
     font-size: 15px;
     font-weight: 500;

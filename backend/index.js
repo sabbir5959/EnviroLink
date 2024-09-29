@@ -22,40 +22,9 @@ app.get("/api", (req, res) => {
 });
 
 
-// ---------------------------------------------------------------------- FUNCTION LOGIN --------------------------------------------------------------------------
-
-
-async function handleLogin(query, params, res) {
-  try {
-    const result = await getData(query, params);
-    
-
-    if (result.length) {
-      console.log("Login Successful");
-      res.status(200).json(result[0]);  
-    } else {
-      console.log("Invalid Credentials");
-      res.status(401).json({ error: "Invalid Credentials" }); 
-    }
-
-  } catch (err) {
-  
-    if (err.code === 'ECONNREFUSED') {
-      console.error("Database connection refused:", err);
-      res.status(503).json({ error: "Service Unavailable. Please try again later." });  
-    } else if (err.name === 'QueryError') {
-      console.error("Query execution error:", err);
-      res.status(500).json({ error: "Error executing the database query." });  
-    } else {
-      console.error("Unexpected error:", err);
-      res.status(500).json({ error: "Internal Server Error" });  
-    }
-  }
-}
-
 
 // Admin login route
-app.post("/api/admin-login", (req, res) => {
+app.post("/api/admin-login", async (req, res) => {
   const { Email, Password } = req.body;
   console.log("Received admin login request:", { Email, Password });
   
@@ -68,13 +37,20 @@ app.post("/api/admin-login", (req, res) => {
   const query = "SELECT * FROM ADMIN WHERE a_email = :Email AND a_password = :Password";
   const params = { Email, Password };
   
- 
-  handleLogin(query, params, res);
+  const result = await getData(query, params);
+    
+  if (result.length) {
+    console.log("Login Successful");
+    res.status(200).json(result[0]);  
+  } else {
+    console.log("Invalid Credentials");
+    res.status(401).json({ error: "Invalid Credentials" }); 
+  }
 });
 
 
 // User login route
-app.post("/api/users", (req, res) => {
+app.post("/api/users", async (req, res) => {
   const { Email, password } = req.body;
   console.log("Received user login request:", { Email, password });
   
@@ -91,13 +67,20 @@ app.post("/api/users", (req, res) => {
   `;
   const params = { Email, password };
 
-
-  handleLogin(query, params, res);
+  const result = await getData(query, params);
+    
+  if (result.length) {
+    console.log("Login Successful");
+    res.status(200).json(result[0]);  
+  } else {
+    console.log("Invalid Credentials");
+    res.status(401).json({ error: "Invalid Credentials" });
+  }
 });
 
 
 // Driver login route
-app.post("/api/drivers", (req, res) => {
+app.post("/api/drivers", async (req, res) => {
   const { id, phone } = req.body;
   console.log("Received driver login request:", { id, phone });
 
@@ -110,12 +93,20 @@ app.post("/api/drivers", (req, res) => {
   const query = "SELECT * FROM DRIVER WHERE driver_id = :id AND d_phone = :phone";
   const params = { id, phone: String(phone) }; // Make sure phone is a string
 
-  handleLogin(query, params, res);
+  const result = await getData(query, params);
+    
+  if (result.length) {
+    console.log("Login Successful");
+    res.status(200).json(result[0]);  
+  } else {
+    console.log("Invalid Credentials");
+    res.status(401).json({ error: "Invalid Credentials" });
+  }
 });
 
 
 // Company login route
-app.post("/api/company-login", (req, res) => {
+app.post("/api/company-login", async (req, res) => {
   const { Email, Password } = req.body;
   console.log("Received company login request:", { Email, Password });
 
@@ -128,7 +119,15 @@ app.post("/api/company-login", (req, res) => {
   const query = "SELECT * FROM COMPANY WHERE c_email = :Email AND c_password = :Password";
   const params = { Email, Password };
 
-  handleLogin(query, params, res);
+  const result = await getData(query, params);
+    
+  if (result.length) {
+    console.log("Login Successful");
+    res.status(200).json(result[0]);  
+  } else {
+    console.log("Invalid Credentials");
+    res.status(401).json({ error: "Invalid Credentials" });
+  }
 });
 
 
@@ -474,28 +473,37 @@ app.get('/api/drivers-name', async (req, res) => {
 app.post("/api/drivers-reg", async (req, res) => {
   const body = req.body;
   console.log(body);
-  const driver_id = body.driverID;
+ 
   const d_name = body.name;
   const truck_no = body.truck_no;
   const licence_no = body.licence_no;
   const d_phone = body.phone;
 
   try {
-    const query = "INSERT INTO Driver (driver_id, d_name, truck_no, licence_no, d_phone) VALUES (:driverID, :name, :truck_no, :licence_no, :phone)";
+    const query = `
+      BEGIN
+        RegisterDriver(:name, :truck_no, :licence_no, :phone);
+      END;
+    `;
+
     const params = {
-      driverID: driver_id,
       name: d_name,
       truck_no: truck_no,
       licence_no: licence_no,
       phone: d_phone
     };
 
-    await insert(query, params);
+    await executePlSqlProcedure(query, params); 
 
     res.status(201).send("Driver registration successful");
   } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).send("Internal Server Error");
+    if (error.errorNum === 20001) {
+      
+      res.status(400).send(error.message);
+    } else {
+      console.error("Error during registration:", error);
+      res.status(500).send("Internal Server Error");
+    }
   }
 });
 
