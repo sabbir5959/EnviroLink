@@ -191,28 +191,83 @@ VALUES ('samia19', 'samia@gmail.com', 'East Side', 'Road 18', 'House 12A', '0123
 -- Insert data into Users table
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Farzana', 'samia19', '01914347042', 'farzana@gmail.com', AddressType('Matikata', 'O-5', 'A-15'));
+VALUES ('Diner', 'diner123', '01736624790', 'diner@gmail.com', AddressType('Mirpur-12', '3', '18'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Diner', 'diner41', '01134567890', 'diner@gmail.com', AddressType('Shagufta', 'L-5', 'B-15'));
+VALUES ('Labib', 'labib123', '01550522756', 'labib@gmail.com', AddressType('Mirpur-11', '4', '16'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Kawsar', 'kawsar47', '01234567890', 'kawsar@gmail.com', AddressType('Balughat', 'N-5', 'C-15'));
+VALUES ('Mahin', 'mahin123', '01550522757', 'mahin@gmail.com', AddressType('Mirpur-10', '1', '4'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Sabbir', '55', '01798155814', 'sabbir1808769@gmail.com', AddressType('Easter Housing', 'N-5', 'J-15'));
+VALUES ('Farhan', 'farhan123', '01550522758', 'farhan@gmail.com', AddressType('Mirpur-6', '5', '12'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ( 'Shoyeb', 'shoyeb71', '01234567890', 'shoyeb@gmail.com', AddressType('Uttara', 'J-5', 'D-15'));
+VALUES ('Sakib', 'sakib123', '01550522766', 'sakib@gmail.com', AddressType('Mirpur-2', '1', '6'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Ramisa', 'ramisa81', '01234567890', 'ramisa@gmail.com', AddressType('Mirpur DOHS', 'N-5', 'E-15'));
+VALUES ('Assaf', 'assaf123', '01550522791', 'assaf@gmail.com', AddressType('Mirpur-10', '2', '6'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ( 'Samara', 'samara99', '01234567890', 'samara@gmail.com', AddressType('Farmgate', 'N-5', 'F-15'));
+VALUES ('Robin', 'robin123', '01550522789', 'robin@gmail.com', AddressType('Mirpur-11', '3', '7'));
 
 INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
-VALUES ('Sadia', 'sadia111', '01234567890', 'sadia@gmail.com', AddressType('Balughat', 'J-5', 'G-15'));
+VALUES ('Ariful', 'ariful', '01550522767', 'ariful@gmail.com', AddressType('Mirpur-7', '4', '2'));
+
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Safayet', 'safayet123', '01550522772', 'safayet@gmail.com', AddressType('Mirpur-2', '12', '2'));
+
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Raihan', 'raihan123', '01550522784', 'raihan@gmail.com', AddressType('Mirpur-1', '12', '34'));
+
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Samiul', 'samiul123', '01550522773', 'samiul@gmail.com', AddressType('Mirpur-10', '14', '4'));
+
+INSERT INTO Users (u_name, u_password, u_phone_no, u_email, address)
+VALUES ('Mushfiq', 'mushfiq123', '01550522782', 'mushfiq@gmail.com', AddressType('Mirpur-10', '6', '12'));
+
+
+
+
+-- Insert data into Company table
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'corp1001@gmail.com', 'Mirpur 12', 'Block 4', '21/4', '01334567890');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', '3mcompany@gmail.com', 'Banani', 'Block 3', '45/6', '01913253223');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'abbottlaboratories@gmail.com', 'Dhanmondi', 'Block 10', '165/4', '01534765444');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'acternacorp@gmail.com', 'Mirpur 1', 'Block C', '55/5', '01726374883');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'agro@gmail.com', 'Banani', 'Block D', '27/1', '01987676533');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'aflak@gmail.com', 'Uttara', 'Block J', '67/6', '017654583921');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'agway@gmail.com', 'Gazipur', 'Block 8', '15/4', '01856764523');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'alaska@gmail.com', 'Tongi', 'Block F', '29/7', '019283455432');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'alcoa@gmail.com', 'Mirpur 10', 'Block D', '17/4', '01378675645');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'amerada@gmail.com', 'Mirpur 11', 'Block E', '25/7', '01912564311');
+
+INSERT INTO Company (c_password, c_email, c_area, c_road, c_house, c_phone)
+VALUES ('1234', 'banknorth@gmail.com', 'Mirpur 7', 'Block 10', '87/2', '01527374854');
+
+
+-- Insert data into Driver table
+
+
 
 
 
@@ -268,12 +323,9 @@ INSERT INTO DRIVER (
 );
 
 
-
-
-
-
-
-
+TRUNCATE TABLE DRIVER;
+TRUNCATE TABLE COMPANY;
+TRUNCATE TABLE USERS;
 
 
 

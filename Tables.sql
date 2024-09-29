@@ -416,6 +416,7 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE FUNCTION check_email(email VARCHAR2) RETURN BOOLEAN IS
 BEGIN
     IF REGEXP_LIKE(email, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') THEN
@@ -479,22 +480,22 @@ CREATE OR REPLACE PROCEDURE RegisterDriver (
     p_licence_no IN Driver.licence_no%TYPE,
     p_phone IN Driver.d_phone%TYPE
 ) IS
-    -- Define a cursor to check for existing driver by name and truck number
+    
     CURSOR check_driver IS
         SELECT driver_id
         FROM Driver
         WHERE d_name = p_name AND truck_no = p_truck_no;
 
 BEGIN
-    -- Open the cursor
+   
     OPEN check_driver;
 
-    -- Check if the cursor fetched any rows
+    
     IF check_driver%FOUND THEN
-        -- Raise an error if driver name and truck number combination already exists
+        
         RAISE_APPLICATION_ERROR(-20001, 'Driver name and truck number combination already exists.');
     ELSE
-        -- Insert the new driver
+        
         INSERT INTO Driver (driver_id, d_name, truck_no, licence_no, d_phone)
         VALUES (p_driver_id, p_name, p_truck_no, p_licence_no, p_phone);
     END IF;

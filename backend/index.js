@@ -23,6 +23,15 @@ app.get("/api", (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
 // Admin login route
 app.post("/api/admin-login", async (req, res) => {
   const { Email, Password } = req.body;
@@ -267,7 +276,12 @@ app.post('/api/selling-requests', async (req, res) => {
 // Admin selling requests endpoint
 app.get("/api/admin/selling-requests/pending", async (req, res) => {
   try {
-    const query = "SELECT * FROM SELLINGREQUEST WHERE status IN ('pending', 'on going process')";
+    const query = `
+      SELECT sr.*, w.TYPE as waste_type 
+      FROM SELLINGREQUEST sr
+      JOIN WASTE w ON sr.waste_id = w.waste_id
+      WHERE sr.status IN ('pending', 'on going process')
+    `;
     const result = await get(query);
 
     console.log("Selling result", result);
@@ -1061,6 +1075,11 @@ app.get('/api/company-history', async (req, res) => {
   }
 });
 
+
+
+//--------------------------------------------------------Dynamic Search--------------------------------------------------------------
+
+
 app.post("/api/selling-dynamic-search", async (req, res) => {
   const { searchPrice, date, category, sortBy, wasteType } = req.body;
 
@@ -1092,9 +1111,9 @@ app.post("/api/selling-dynamic-search", async (req, res) => {
       bindParams.search_price = searchPrice;  
 
       if (sortBy === 'low') {
-        where += ` AND sellingrequest.price < :search_price ORDER BY sellingrequest.price ASC`;
+        where += ` AND sellingrequest.price > :search_price ORDER BY sellingrequest.price ASC`;
       } else if (sortBy === 'high') {
-        where += ` AND sellingrequest.price > :search_price ORDER BY sellingrequest.price DESC`;
+        where += ` AND sellingrequest.price < :search_price ORDER BY sellingrequest.price DESC`;
       } else{
         where += ` AND sellingrequest.price = :search_price`;
       }
@@ -1157,9 +1176,9 @@ app.post("/api/buying-dynamic-search", async (req, res) => {
       bindParams.search_price = searchPrice;  
 
       if (sortBy === 'low') {
-        where += ` AND buyingrequest.amount < :search_price ORDER BY buyingrequest.amount ASC`;
+        where += ` AND buyingrequest.amount > :search_price ORDER BY buyingrequest.amount ASC`;
       } else if (sortBy === 'high') {
-        where += ` AND buyingrequest.amount > :search_price ORDER BY buyingrequest.amount DESC`;
+        where += ` AND buyingrequest.amount < :search_price ORDER BY buyingrequest.amount DESC`;
       } else {
         where += ` AND buyingrequest.amount = :search_price`;
       }

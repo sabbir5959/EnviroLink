@@ -23,11 +23,14 @@ const handleSubmit = async (e) => {
     name: name.value,
     phone: phone.value,
     email: email.value,
-    area: area.value,
-    road: road.value,
-    house: house.value,
+    address: {
+      area: area.value,
+      road: road.value,
+      house: house.value,
+    },
     password: password.value,
   };
+  
 
     console.log(user);
 

@@ -288,13 +288,12 @@ function loadContent(page) {
                 <h2>Selling Request Details</h2>
                 <div id="detailsContent">
                     <!-- Details content will be dynamically loaded here -->
-                    <p><strong>Request ID:</strong> <span id="requestId"></span></p>
+                    <p><strong>Date:</strong> <span id="date"></span></p><br>
                     <p><strong>User ID:</strong> <span id="userId"></span></p>
-                    <p><strong>Price:</strong> <span id="amount"></span></p>
-                    <p><strong>Waste ID:</strong> <span id="weight"></span></p>
+                    <p><strong>Waste type:</strong> <span id="weight"></span></p>
                     <p><strong>Quantity:</strong> <span id="reqType"></span></p>
+                    <p><strong>Price:</strong> <span id="amount"></span></p><br><br>
                     <p><strong>Status:</strong> <span id="status"></span></p>
-                    <p><strong>Date:</strong> <span id="date"></span></p>
                 </div>
                 <form id="feedbackForm" onsubmit="submitFeedback(event)">
                     <h2>Give Feedback for user's request</h2>
@@ -864,34 +863,30 @@ function showDetails(requestId) {
     }
 
     // Set request details
-    document.getElementById('requestId').innerText = request[0];
+ 
     document.getElementById('userId').innerText = request[1];
     document.getElementById('amount').innerText = request[2];
-    document.getElementById('weight').innerText = request[3];
+    document.getElementById('weight').innerText = request[7];
     document.getElementById('reqType').innerText = request[4];
     document.getElementById('date').innerText = request.SELL_REQ_DATE;
     document.getElementById('acceptRequestId').value = requestId;
 
     console.log('Request Id:', requestId, 'User Id', request[1]);
 
-    // Set status text and apply color and font weight based on the status
     const statusElement = document.getElementById('status');
     statusElement.innerText = request[5];
-    statusElement.style.fontWeight = 'bold'; // Make the text bold
-
-    // Change color based on status
+    statusElement.style.fontWeight = 'bold'; 
+    
     if (request[5] === 'on going process') {
-        statusElement.style.color = '#DAA520'; // Dark yellow (Goldenrod)
+        statusElement.style.color = '#DAA520'; 
     } else if (request[5] === 'pending') {
         statusElement.style.color = 'red'; 
     } else if (request[5] === 'completed') {
         statusElement.style.color = 'green'; 
     }
 
-    // Always show the details section
     document.getElementById('detailsSection').style.display = 'block';
 
-    // Show or hide the feedback form based on the status
     const feedbackForm = document.getElementById('feedbackForm');
     if (request[5] === 'pending' || request[5] === 'completed') {
         feedbackForm.style.display = 'none';
