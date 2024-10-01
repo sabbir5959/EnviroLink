@@ -310,31 +310,25 @@ app.put('/api/admin/selling-requests/:id/accept', async (req, res) => {
 
 // Reject a selling request
 app.delete('/api/admin/selling-requests/:id/reject', async (req, res) => {
-  const requestId = req.params.id;
+  const { id: requestId } = req.params;
+
+  console.log('Request ID:', requestId);
+
   try {
-    const query = "DELETE FROM SELLINGREQUEST WHERE sell_req_id = :requestId";
+    const query = "DELETE FROM SELLINGREQUEST WHERE sell_req_id = :requestId AND status = 'pending'";
     await update(query, { requestId });
     res.status(200).send("Request rejected successfully");
+
+    const q = "SELECT * FROM SELLINGREQUEST";
+    const result = await get(q);
+    console.log("result", result);
+
   } catch (error) {
     console.error("Error rejecting request:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-
-
-// Cancel an accepted selling request
-app.put('/api/admin/selling-requests/:id/cancel', async (req, res) => {
-  const requestId = req.params.id;
-  try {
-    const query = "UPDATE SELLINGREQUEST SET status = 'pending' WHERE sell_req_id = :requestId";
-    await update(query, { requestId });
-    res.status(200).send("Request canceled successfully");
-  } catch (error) {
-    console.error("Error canceling request:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
 
 // ---------------------------------------------------------------------- NOTIFICATIONS --------------------------------------------------------------------------
@@ -356,7 +350,7 @@ app.post('/api/driver/notifications', async (req, res) => {
          u.u_name AS user_name, 
          u.u_phone_no, 
          u.u_email, 
-         u.full_address AS address,  
+         u.address,  
          sr.status, 
          w.TYPE as "Waste Type", 
          sr.quantity, 
@@ -539,7 +533,6 @@ app.get('/api/drivers', async (req, res) => {
 
 // ---------------------------------------------------------------------- DRIVER REPORT --------------------------------------------------------------------------
 
-// Driver submits a report to the admin about waste collection
 app.post('/api/reportToAdmin', async (req, res) => {
   const { driverId, userId, wasteType, quantity, price, ndate } = req.body;
   console.log("req body (reportToAdmin): ", req.body);
@@ -560,12 +553,11 @@ app.post('/api/reportToAdmin', async (req, res) => {
 
   try {
     // Insert query
-    const query = `      
+    const query =  `     
       INSERT INTO ReportToAdmin (driver_id, user_id, waste_type, quantity, price, report_date)
       VALUES (:driverId, :userId, :wasteType, :quantity, :price, TO_DATE(:ndate, 'YYYY-MM-DD'))
     `;
 
-    // Define the parameters
     const params = {
       driverId,
       userId,
@@ -588,7 +580,6 @@ app.post('/api/reportToAdmin', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while submitting the report.' });
   }
 });
-
 
 
 // ReportForCompany
@@ -769,16 +760,18 @@ app.get('/api/notifications', async (req, res) => {
 // Handle company notifications
 app.get('/api/CompanyNotifications', async (req, res) => {
   try {
-    const companies = JSON.parse(req.query.companies);
+    const company = JSON.parse(req.query.company);
 
     const query = `
       SELECT c.company_id, f.C_description, f.C_driver_name, TO_CHAR(f.C_feedback_date, 'YYYY-MM-DD') as "Date"
       FROM FeedbackForCompany f
       JOIN BuyingRequest br ON f.C_request_id = br.buying_req_id
       JOIN Company c ON br.company_id = c.company_id
-      WHERE c.company_id IN (${companies.join(',')})
+      WHERE c.company_id IN ('${company}')
     `;
     const result = await getData(query);
+
+    console.log('Executing query:', query);
 
     console.log('Company Notifications:', result);
 
@@ -839,19 +832,23 @@ app.get('/api/drivers-info', async (req, res) => {
 
 // ---------------------------------------------------------------------- BUYING REQUEST --------------------------------------------------------------------------
 
+
 app.post('/api/buying-request', async (req, res) => {
   const { companyId, wasteType, quantity, price, date } = req.body;
   console.log('Received buying request:', req.body);
 
   try {
-    // Check for existing pending request for this company
+    // Check for existing pending or ongoing requests for this company
     const checkQuery = `
-      SELECT COUNT(*) FROM BuyingRequest 
+      SELECT COUNT(*) AS activeRequests FROM BuyingRequest 
       WHERE company_id = :companyId AND status IN ('pending', 'on going process')
     `;
     const checkResult = await getData(checkQuery, { companyId });
 
-    if (checkResult[0][0] > 0) {
+    // Properly handle the result and prevent multiple requests
+    const activeRequestCount = checkResult[0][0];  // Ensure this correctly fetches the count
+
+    if (activeRequestCount > 0) {
       console.error('There is already an active buying request for this company.');
       return res.status(400).send('Failed to submit request. You already have an active buying request.');
     }
@@ -867,7 +864,7 @@ app.post('/api/buying-request', async (req, res) => {
       return res.status(400).send("Invalid waste type");
     }
 
-    const wasteId = wasteResult[0][0];
+    const wasteId = wasteResult[0][0]; // Ensure this matches your structure
 
     // Insert into BuyingRequest table using the sequence for buying_req_id
     const insertQuery = `
@@ -937,28 +934,12 @@ app.delete('/api/admin/buying-requests/:id/reject', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const query = "DELETE FROM BuyingRequest WHERE buying_req_id = :id";
+    const query = "DELETE FROM BuyingRequest WHERE buying_req_id = :id AND status = 'pending'";
     await update(query, { id });
 
     res.status(200).send("Buying request rejected and deleted successfully");
   } catch (error) {
     console.error("Error rejecting and deleting buying request:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-
-// Cancel a buying request
-app.put('/api/admin/buying-requests/:id/cancel', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const query = "UPDATE BuyingRequest SET status = 'pending' WHERE buying_req_id = :id";
-    await update(query, { id });
-
-    res.status(200).send("Buying request cancelled successfully");
-  } catch (error) {
-    console.error("Error cancelling buying request:", error);
     res.status(500).send("Internal Server Error");
   }
 });

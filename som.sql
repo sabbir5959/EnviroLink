@@ -180,7 +180,14 @@ VALUES ('samia19', 'samia@gmail.com', 'East Side', 'Road 18', 'House 12A', '0123
 
 
 
+DELETE FROM SELLINGREQUEST WHERE sell_req_id = 'SR1001' AND status = 'pending';
+DELETE FROM BuyingRequest WHERE buying_req_id = 'BR1001' AND status = 'pending';
 
+SELECT c.company_id, f.C_description, f.C_driver_name, TO_CHAR(f.C_feedback_date, 'YYYY-MM-DD') as "Date"
+      FROM FeedbackForCompany f
+      JOIN BuyingRequest br ON f.C_request_id = br.buying_req_id
+      JOIN Company c ON br.company_id = c.company_id
+      WHERE c.company_id IN ('C1001');
 
 
 
@@ -331,20 +338,20 @@ TRUNCATE TABLE USERS;
 
 -- Insert data into waste table
 
-INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20202024, 'Plastic', 1, 45);
-INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20212025, 'Paper', 1, 40);
-INSERT INTO WASTE (waste_id, type, weight, price) VALUES (20222026, 'Metal', 1, 80);
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (202024, 'Plastic', 1, 45);
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (202125, 'Paper', 1, 40);
+INSERT INTO WASTE (waste_id, type, weight, price) VALUES (202226, 'Metal', 1, 80);
 
 
 
 INSERT INTO WasteDetails (waste_id, price, quantity)
-VALUES (20202024, 26910, 598);
+VALUES (202024, 26910, 598);
 
 INSERT INTO WasteDetails (waste_id, price, quantity)
-VALUES (20212025, 49760, 1244);
+VALUES (202125, 49760, 1244);
 
 INSERT INTO WasteDetails (waste_id, price, quantity)
-VALUES (20222026, 63920, 799);
+VALUES (202226, 63920, 799);
 
 
 

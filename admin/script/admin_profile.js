@@ -243,16 +243,22 @@ function loadContent(page) {
             </div>
             <div id="buyingDetailsSection" style="display: none;">
                 <h2>Buying Request Details</h2>
-                <div id="detailsContent">
-                    <!-- Details content will be dynamically loaded here -->
-                    <p><strong>Request ID:</strong> <span id="BuyrequestId"></span></p>
-                    <p><strong>Company ID:</strong> <span id="companyId"></span></p>
-                    <p><strong>Price:</strong> <span id="amount"></span></p>
-                    <p><strong>Waste ID:</strong> <span id="wasteId"></span></p>
-                    <p><strong>Quantity:</strong> <span id="quantity"></span></p>
-                    <p><strong>Status:</strong> <span id="status"></span></p>
-                    <p><strong>Date:</strong> <span id="date"></span></p>
+                <div id="detailsContainer">
+                    <div id="detailsContent">
+                    
+                    
+                        <p><strong>Date:</strong> <span id="date"></span></p><br>
+                        <p><strong>Company ID:</strong> <span id="companyId"></span></p>
+                        <p><strong>Waste ID:</strong> <span id="wasteId"></span></p>
+                        <p><strong>Quantity:</strong> <span id="quantity"></span></p><br><br>
+                        <p><strong>Price:</strong> <span id="amount"></span></p>
+                        <p><strong>Status:</strong> <span id="status"></span></p>
+                    </div>
+
+                    <img id="wasteImage" src="" alt="Waste Image" style="width: 200px; height: 200px;">
+
                 </div>
+
                 <form id="feedbackForm" onsubmit="submitBuyingRequestFeedback(event)">
                     <h2>Give Feedback for company's request</h2>
                     <label for="feedbackDate">Date:</label>
@@ -286,14 +292,18 @@ function loadContent(page) {
             </div>
             <div id="detailsSection" style="display: none;">
                 <h2>Selling Request Details</h2>
-                <div id="detailsContent">
-                    <!-- Details content will be dynamically loaded here -->
-                    <p><strong>Date:</strong> <span id="date"></span></p><br>
-                    <p><strong>User ID:</strong> <span id="userId"></span></p>
-                    <p><strong>Waste type:</strong> <span id="weight"></span></p>
-                    <p><strong>Quantity:</strong> <span id="reqType"></span></p>
-                    <p><strong>Price:</strong> <span id="amount"></span></p><br><br>
-                    <p><strong>Status:</strong> <span id="status"></span></p>
+                <div id="detailsContainer">
+                    <div id="detailsContent">
+                        <p><strong>Date:</strong> <span id="date"></span></p><br>
+                        <p><strong>User ID:</strong> <span id="userId"></span></p>
+                        <p><strong>Waste type:</strong> <span id="weight"></span></p>
+                        <p><strong>Quantity:</strong> <span id="reqType"></span></p>
+                        <p><strong>Price:</strong> <span id="amount"></span></p><br><br>
+                        <p><strong>Status:</strong> <span id="status"></span></p>
+                    </div>
+                    
+                    <img id="wasteImage" src="" alt="Waste Image" style="width: 200px; height: 200px;">
+                    
                 </div>
                 <form id="feedbackForm" onsubmit="submitFeedback(event)">
                     <h2>Give Feedback for user's request</h2>
@@ -398,18 +408,18 @@ function loadContent(page) {
 
     document.getElementById('dynamicSearchSection').style.display = 'none';
     
-    // Handling dynamic content
+
     if (page === 'users') {
         const users = getUsersFromLocalStorage();
         displayUsers(users);
     } else if (page === 'sellingRequests') {
         fetchSellingRequests();
     } else if (page === 'buyingRequests') {
-        fetchBuyingRequests(); // Fetch buying requests when the buyingRequests page is loaded
+        fetchBuyingRequests(); 
     } else if (page === 'company') {
         fetchCompanies();
     } else if (page === 'drivers') {
-        fetchDriversInfo(); // Fetch drivers info when the drivers page is loaded
+        fetchDriversInfo(); 
     } else if (page === 'history') {
         initializeHistory();
     } else if (page === 'dynamicSearch') {
@@ -420,7 +430,7 @@ function loadContent(page) {
 function initializeHistory() {
     const showHistoryBtn = document.getElementById('showHistoryBtn');
     
-    // Show the history section only after the "Show History" button is clicked
+   
     showHistoryBtn.addEventListener('click', function() {
         const historyType = document.getElementById('historyType').value;
         loadHistory(historyType);
@@ -433,18 +443,14 @@ async function loadHistory(historyType) {
     
     const historyResult = document.getElementById('historyResult');
 
-    // Clear previous history and table content
-    
-
-    // Create table element
+   
     const table = document.createElement('table');
-    table.classList.add('historyTable'); // Add any class or styling you want
+    table.classList.add('historyTable'); 
 
-    // Create table header
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
 
-    // Set the header content based on historyType
+  
     if (historyType === 'sell') {
         headerRow.innerHTML = `
             <th>Date</th>
@@ -468,8 +474,8 @@ async function loadHistory(historyType) {
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    // Append the table to the history result container
-    historyResult.innerHTML = ''; // Clear previous table if any
+    
+    historyResult.innerHTML = ''; 
     historyResult.appendChild(table);
 
     const endpoints = {
@@ -498,7 +504,7 @@ async function loadHistory(historyType) {
                 
                 const row = document.createElement('tr');
                 const date = new Date(request[2]);
-                const formattedDate = date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+                const formattedDate = date.toISOString().split('T')[0]; 
                 row.innerHTML = historyType === 'sell' ? `
                     <td>${formattedDate}</td>
                     <td>${request[0]}</td>
@@ -534,12 +540,10 @@ async function loadHistory(historyType) {
 }
 
 
-
-// Fetching buying requests from the server
 async function fetchBuyingRequests() {
     try {
         const response = await fetch('http://localhost:3000/api/admin/buying-requests/pending');
-        buyingRequests = await response.json(); // Store the fetched requests
+        buyingRequests = await response.json();
 
         console.log('Fetched buying requests:', buyingRequests);
         
@@ -552,10 +556,10 @@ async function fetchBuyingRequests() {
     }
 }
 
-// Displaying buying requests
+
 function displayBuyingRequests(buyingRequests) {
     const tableBody = document.querySelector('#buyingRequestsTable tbody');
-    tableBody.innerHTML = ''; // Clear previous rows
+    tableBody.innerHTML = '';
 
     if (buyingRequests.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="4">No buying requests found.</td></tr>';
@@ -565,11 +569,11 @@ function displayBuyingRequests(buyingRequests) {
     buyingRequests.forEach(request => {
         const row = document.createElement('tr');
 
-        // Determine the color and font weight based on the status
-        let statusColor = 'black'; // Default color
-        let fontWeight = 'normal'; // Default font weight
+       
+        let statusColor = 'black'; 
+        let fontWeight = 'normal'; 
         if (request[6] === 'on going process') {
-            statusColor = '#DAA520'; // Dark yellow (Goldenrod)
+            statusColor = '#DAA520'; 
             fontWeight = 'bold';
         } else if (request[6] === 'pending') {
             statusColor = 'red';
@@ -587,12 +591,10 @@ function displayBuyingRequests(buyingRequests) {
             <td>${request[2]}</td>
             <td style="color: ${statusColor}; font-weight: ${fontWeight};">${request[6]}</td>
             <td>
-                <button onclick="showBuyingDetails('${request[0]}')">Details</button>
-                ${request[6] === 'pending' ? 
-                    `<button onclick="AcceptRequest('${request[0]}')">Accept</button>
-                     <button onclick="RejectRequest('${request[0]}')">Reject</button>` : 
-                    request[6] === 'on going process' ? 
-                    `<button onclick="CancelRequest('${request[0]}')">Cancel</button>` : ''}
+            <button onclick="showBuyingDetails('${request[0]}')">Details</button>
+            ${request[6] === 'pending' ? 
+                `<button onclick="AcceptRequest('${request[0]}')">Accept</button>
+                 <button onclick="RejectRequest('${request[0]}', '${request[2]}')">Reject</button>` : ''}
             </td>
         `;
 
@@ -603,38 +605,35 @@ function displayBuyingRequests(buyingRequests) {
 function showBuyingDetails(BuyrequestId) {
     const request = buyingRequests.find(req => req[0] === BuyrequestId);
 
-
-
     if (!request) {
         alert('Request not found');
         return;
     }
 
     const elements = {
-        BuyrequestId: document.getElementById('BuyrequestId'),
         companyId: document.getElementById('companyId'),
         quantity: document.getElementById('quantity'),
         wasteId: document.getElementById('wasteId'),
         amount: document.getElementById('amount'),
         date: document.getElementById('date'),
         status: document.getElementById('status'),
-        acceptRequestId: document.getElementById('acceptRequestId')
+        acceptRequestId: document.getElementById('acceptRequestId'),
+        wasteImage: document.getElementById('wasteImage')
     };
 
-    // Format the date to exclude the time
+    
     const formattedDate = new Date(request[5]).toISOString().split('T')[0];
 
-    elements.BuyrequestId.innerText = request[0];
     elements.companyId.innerText = request[2];
     elements.quantity.innerText = request[1];
     elements.wasteId.innerText = request[3];
     elements.amount.innerText = request[4];
     elements.date.innerText = formattedDate;
     elements.status.innerText = request[6];
-    elements.acceptRequestId.value = BuyrequestId; // Set the hidden field value
+    elements.acceptRequestId.value = BuyrequestId; 
 
-    // Add color based on the status
-    elements.status.style.fontWeight = 'bold'; // Make the text bold
+
+    elements.status.style.fontWeight = 'bold'; 
     if (request[6].toLowerCase() === 'pending') {
         elements.status.style.color = 'red';
     } else if (request[6].toLowerCase() === 'on going process') {
@@ -643,21 +642,37 @@ function showBuyingDetails(BuyrequestId) {
         elements.status.style.color = 'green';
     }
 
+  
+    const wasteImageURL = getWasteImageURL(request[3]); 
+    elements.wasteImage.src = wasteImageURL;
+    
     document.getElementById('buyingDetailsSection').style.display = 'block';
 
-    // Show or hide the feedback form based on the status
+  
     const feedbackForm = document.getElementById('feedbackForm');
     if (request[6] === 'pending' || request[6] === 'completed') {
         feedbackForm.style.display = 'none';
     } else {
         feedbackForm.style.display = 'block';
-        // Set default value for the description box
+
         const descriptionBox = document.getElementById('description');
         descriptionBox.value = 'Your request has been accepted and you will get your delivery on ';
     }
 }
 
-// Handling buying request feedback form submission
+
+function getWasteImageURL(wasteId) {
+    const imageMap = {
+        '202024': 'E:/EnviroLink/global/images/plastic.jpg',
+        '202125': 'E:/EnviroLink/global/images/paper.jpg',
+        '202226': 'E:/EnviroLink/global/images/metal.jpg',
+
+    };
+
+    return imageMap[wasteId];
+}
+
+
 async function submitBuyingRequestFeedback(event) {
     event.preventDefault();
     const requestId = document.getElementById('acceptRequestId').value;
@@ -697,7 +712,7 @@ async function AcceptRequest(BuyrequestId) {
 
         if (response.ok) {
             alert('Request accepted successfully');
-            fetchBuyingRequests(); // Update the list to reflect changes
+            fetchBuyingRequests(); 
         } else {
             alert('Failed to accept the request');
         }
@@ -708,10 +723,10 @@ async function AcceptRequest(BuyrequestId) {
     window.location.reload();
 }
 
-async function RejectRequest(BuyrequestId) {
+async function RejectRequest(BuyrequestId, companyId) {
     try {
         const response = await fetch(`http://localhost:3000/api/admin/buying-requests/${BuyrequestId}/reject`, {
-            method: 'PUT',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -719,7 +734,7 @@ async function RejectRequest(BuyrequestId) {
 
         if (response.ok) {
             alert('Request rejected successfully');
-            fetchBuyingRequests(); // Update the list to reflect changes
+            fetchBuyingRequests(); 
         } else {
             alert('Failed to reject the request');
         }
@@ -727,28 +742,13 @@ async function RejectRequest(BuyrequestId) {
         console.error('Error rejecting request:', error);
         alert('Failed to reject the request');
     }
-    window.location.reload();
-}
 
-async function CancelRequest(BuyrequestId) {
-    try {
-        const response = await fetch(`http://localhost:3000/api/admin/buying-requests/${BuyrequestId}/cancel`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+    const CompanyrejectMessage = `Your request has been rejected. Please try letter.`;
 
-        if (response.ok) {
-            alert('Request canceled successfully');
-            fetchBuyingRequests(); // Update the list to reflect changes
-        } else {
-            alert('Failed to cancel the request');
-        }
-    } catch (error) {
-        console.error('Error canceling request:', error);
-        alert('Failed to cancel the request');
-    }
+    localStorage.setItem('CompanyrejectMessage', CompanyrejectMessage);
+    
+    alert(`Company ID: ${companyId} request has been rejected.`);
+
     window.location.reload();
 }
 
@@ -797,7 +797,7 @@ function searchUser() {
 }
 
 
-// Fetching selling requests from the server
+
 async function fetchSellingRequests() {
     try {
         const response = await fetch('http://localhost:3000/api/admin/selling-requests/pending');
@@ -814,7 +814,7 @@ async function fetchSellingRequests() {
     }
 }
 
-// Displaying selling requests
+
 function displaySellingRequests(sellingRequests) {
     const tableBody = document.querySelector('#sellingRequestsTable tbody');
     tableBody.innerHTML = ''; // Clear previous rows
@@ -842,16 +842,20 @@ function displaySellingRequests(sellingRequests) {
             <td style="color: ${statusColor}; font-weight: ${fontWeight};">${request[5]}</td>
             <td>
                 <button onclick="showDetails('${request[0]}')">Details</button>
-                ${request[5] === 'on going process' ? 
-                    `<button onclick="cancelRequest('${request[0]}')">Cancel</button>` : 
-                    request[5] === 'pending' ? 
+                    ${request[5] === 'pending' ? 
                     `<button onclick="acceptRequest('${request[0]}')">Accept</button>
-                     <button onclick="rejectRequest('${request[0]}')">Reject</button>` : ''}
+                     <button onclick="rejectRequest('${request[0]}', '${request[1]}')">Reject</button>` : ''}
             </td>
         `;
         tableBody.appendChild(row);
     });
 }
+
+const wasteImages = {
+    'Plastic': 'E:/EnviroLink/global/images/plastic.jpg',
+    'Paper': 'E:/EnviroLink/global/images/paper.jpg',
+    'Metal': 'E:/EnviroLink/global/images/metal.jpg',
+};
 
 // Showing request details
 function showDetails(requestId) {
@@ -885,6 +889,17 @@ function showDetails(requestId) {
         statusElement.style.color = 'green'; 
     }
 
+    const wasteImage = document.getElementById('wasteImage');
+    // console.log('Waste Image Element:', wasteImage); 
+    
+    if (wasteImage) {
+        const wasteType = request[7]; 
+        wasteImage.src = wasteImages[wasteType];
+    } else {
+        console.error('Waste image element not found in the DOM.');
+    }
+    
+
     document.getElementById('detailsSection').style.display = 'block';
 
     const feedbackForm = document.getElementById('feedbackForm');
@@ -892,7 +907,6 @@ function showDetails(requestId) {
         feedbackForm.style.display = 'none';
     } else {
         feedbackForm.style.display = 'block';
-        // Set default value for the description box
         const descriptionBox = document.getElementById('description');
         descriptionBox.value = 'Your request has been accepted and we will collect the items on';
     }
@@ -947,7 +961,7 @@ async function acceptRequest(requestId) {
 }
 
 // Rejecting a selling request
-async function rejectRequest(requestId) {
+async function rejectRequest(requestId, userId) {
     try {
         const response = await fetch(`http://localhost:3000/api/admin/selling-requests/${requestId}/reject`, {
             method: 'DELETE',
@@ -964,29 +978,16 @@ async function rejectRequest(requestId) {
         console.error('Error rejecting request:', error);
         alert('Failed to reject request');
     }
-    const userId = sellingRequests.find(req => req[0] === requestId)[1];
-    alert(`User ID ${userId}'s request has been rejected.`);
+    console.log('User ID:', userId);
+
+    const rejectMessage = `Your request has been rejected. Please try letter.`;
+
+    localStorage.setItem('rejectMessage', rejectMessage);
+    
+    alert(`User ID: ${userId} request has been rejected.`);
     window.location.reload();
 }
 
-// Canceling a selling request
-async function cancelRequest(requestId) {
-    try {
-        const response = await fetch(`http://localhost:3000/api/admin/selling-requests/${requestId}/cancel`, {
-            method: 'PUT',
-        });
-        if (response.ok) {
-            alert('Request canceled successfully');
-            fetchSellingRequests(); // Refresh selling requests after canceling
-        } else {
-            throw new Error('Failed to cancel request');
-        }
-    } catch (error) {
-        console.error('Error canceling request:', error);
-        alert('Failed to cancel request');
-    }
-    window.location.reload();
-}
 
 
 function performSearch() {

@@ -393,3 +393,14 @@ form button {
         font-size: 12px;
     }
 }
+
+
+#detailsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#detailsContent {
+    flex: 1;
+}

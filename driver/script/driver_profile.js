@@ -48,7 +48,7 @@ function loadPage(page = 'profile', data = {}) {
                     <div class="form-container">
                         <div class="form-column">
                             <label for="userId">User ID:</label>
-                            <input type="text" id="userId" name="userId" value="${data.userId || ''}" required>
+                            <input type="text" id="userId" name="userId" value="${data.userId}" required>
             
                             <label for="wasteType">Waste Type:</label>
                             <input type="text" id="wasteType" name="wasteType" required>
@@ -90,6 +90,8 @@ function loadPage(page = 'profile', data = {}) {
                             ndate: date
                         })
                     });
+
+                    console.log('body:', JSON.stringify({ driverId: data.driverId, userId: userId, wasteType: wasteType, quantity: quantity, price: price, ndate: date }));
             
                     alert(`Waste collection for User ID: ${userId} completed successfully.`);
             
@@ -119,7 +121,7 @@ function loadPage(page = 'profile', data = {}) {
         <div class="form-container">
             <div class="form-column">
                 <label for="companyId">Company ID:</label>
-                <input type="text" id="companyId" name="companyId" value="${data.companyId || ''}" required>
+                <input type="text" id="companyId" name="companyId" value="${data.companyId}" required>
 
                 <label for="wasteType">Waste Type:</label>
                 <input type="text" id="wasteType" name="wasteType" required>
@@ -162,6 +164,7 @@ function loadPage(page = 'profile', data = {}) {
                     ndate: date
                 })
             })
+
             .then(async response => {
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -171,7 +174,7 @@ function loadPage(page = 'profile', data = {}) {
             })
             .then(() => {
                 
-                alert(`Waste delivery for Company ID: ${companyId} completed successfully.`);
+                alert(`Waste delivery for Company ID: '${companyId}' completed successfully.`);
 
                 return fetch('http://localhost:3000/api/updateStatus', {
                     method: 'POST',
@@ -242,7 +245,7 @@ function loadWasteDeliveryRequests(Driver) {
                             <p><strong>Waste Type:</strong> ${notification[8]}</p>
                             <p><strong>Quantity:</strong> ${notification[9]}</p>
                             <p><strong>Price:</strong> ${notification[10]}</p>
-                            <button class="start-process-btn" onclick="acceptRequest(${notification[0]}, this, true)">Start Process</button>
+                            <button class="start-process-btn" onclick="acceptRequest('${notification[0]}', this, true)">Start Process</button>
                         </div>
                     </li>
                 `;
@@ -292,13 +295,13 @@ function loadWasteCollectRequests(Driver) {
                             <strong>${new Date(notification[1]).toLocaleDateString()}</strong><br>
                             <p><strong>User Name:</strong> ${notification[2]}</p>
                             <p><strong>Phone:</strong> ${notification[3]}</p>
-                            <p><strong>Area:</strong> ${notification[5]}</p>
-                            <p><strong>House:</strong> ${notification[7]}, <strong>Road:</strong> ${notification[6]}</p>
+                            <p><strong>Area:</strong> ${notification[5].AREA}</p>
+                            <p><strong>House:</strong> ${notification[5].HOUSE}, <strong>Road:</strong> ${notification[5].ROAD}</p>
                         </div>
                         <div class="waste-details" style="text-align: right;">
-                            <p><strong>Waste Type:</strong> ${notification[9]}</p>
-                            <p><strong>Quantity:</strong> ${notification[10]}</p>
-                            <p><strong>Price:</strong> ${notification[11]}</p>
+                            <p><strong>Waste Type:</strong> ${notification[7]}</p>
+                            <p><strong>Quantity:</strong> ${notification[8]}</p>
+                            <p><strong>Price:</strong> ${notification[9]}</p>
                             <button class="start-process-btn" onclick="acceptRequest('${notification[0]}', this)">Start Process</button>
                         </div>
                     </li>

@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
   const wastePrices = {
-    Plastic: 19,
-    Paper: 41,
-    Metal: 47
+    Plastic: 45,
+    Paper: 40,
+    Metal: 80
   };
 
   const wasteTypeField = document.getElementById('wasteType');
