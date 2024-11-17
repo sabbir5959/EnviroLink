@@ -352,7 +352,7 @@ app.post('/api/driver/notifications', async (req, res) => {
          u.u_email, 
          u.address,  
          sr.status, 
-         w.TYPE as "Waste Type", 
+         w.TYPE as "Waste Type",
          sr.quantity, 
          sr.price
   FROM FeedbackForUsers f
